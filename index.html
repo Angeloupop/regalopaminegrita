@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Negrita Linda 💖</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6; /* Fondo rosado pastel */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden; /* Evita barras de desplazamiento */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Contenedor principal para centrar todo */
+        .contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Clases para ocultar y mostrar pantallas */
+        .pantalla {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .activa {
+            display: flex; 
+        }
+
+        /* Estilos de los Botones */
+        .botones-contenedor {
+            display: flex;
+            flex-wrap: wrap; /* Permite que los botones bajen si no caben */
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 12px;
+            transition: all 0.2s ease-out; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-weight: bold;
+            max-width: 90vw; /* Evita que el botón sea más ancho que la pantalla */
+            white-space: normal; /* Permite que el texto del botón baje a otra línea si es muy largo */
+            word-wrap: break-word;
+        }
+
+        .btn-si {
+            background-color: #ff4d4d; 
+            color: white;
+            z-index: 10; 
+        }
+
+        .btn-no {
+            background-color: #cccccc; 
+            color: #333;
+        }
+
+        #btn-empezar {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 20px 40px;
+            font-size: 24px;
+            border-radius: 50px;
+            animation: latido 1.5s infinite; /* Un pequeño efecto de latido para llamar la atención */
+        }
+
+        @keyframes latido {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Estilos del Final */
+        h1 { color: #cc0000; margin-bottom: 20px; font-size: 32px; }
+        
+        .texto-final { 
+            font-size: 22px; 
+            color: #cc0000; 
+            font-weight: bold; 
+            max-width: 90%; 
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .imagen-final { 
+            width: 400px; 
+            max-width: 100%;
+            border-radius: 20px; 
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            border: 4px solid white;
+        }
+
+        /* --- ADAPTACIÓN PARA TELÉFONOS (MEDIA QUERIES) --- */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 26px; /* Letra un poco más pequeña */
+                margin-bottom: 15px;
+            }
+            #btn-empezar {
+                font-size: 20px;
+                padding: 15px 30px;
+            }
+            .texto-final {
+                font-size: 18px; /* Texto final adaptado para que se lea fácil */
+            }
+            button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+            .botones-contenedor {
+                gap: 10px; /* Menos espacio entre botones para que quepan mejor */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="musica" loop>
+        <source src="melancholy.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="contenedor">
+        <div id="intro" class="pantalla activa">
+            <button id="btn-empezar" onclick="empezar()">Toca aquí para tu sorpresa 💖</button>
+        </div>
+
+        <div id="pregunta1" class="pantalla">
+            <h1>Te amo, ¿Tú me amas?</h1>
+            <div class="botones-contenedor">
+                <button id="btn-si-1" class="btn-si" onclick="dijoSi1()">¡Sí!</button>
+                <button id="btn-no-1" class="btn-no" onclick="dijoNo1()">No</button>
+            </div>
+        </div>
+
+        <div id="pregunta2" class="pantalla">
+            <h1>¿De verdad me amas?</h1>
+            <div class="botones-contenedor">
+                <button id="btn-si-2" class="btn-si" onclick="dijoSi2()">¡Obvio que sí!</button>
+                <button id="btn-no-2" class="btn-no" onclick="dijoNo2()">Mmm... no</button>
+            </div>
+        </div>
+
+        <div id="success" class="pantalla">
+            <p class="texto-final">Te amo mucho mi negrita linda, te hice esto como regalo de los 3 años juntos y que por fin pude terminar, espero te guste, asi como tu me gustas, y como me gusta los buenos y malos momentos que hemos pasado juntos, te amo y te amo un monton mi corazon</p>
+            <img src="mapache_chiguire.jpg" alt="Nosotros" class="chiguire">        </div>
+    </div>
+
+    <script>
+        let musicaIniciada = false;
+
+        const frases1 = [
+            "¿Estás segura?", 
+            "Piénsalo bien...", 
+            "¡Mira que me pongo a llorar!", 
+            "Ándale, di que sí...", 
+            "No seas así 😭", 
+            "Última oportunidad..."
+        ];
+        let clicsNo1 = 0;
+        let tamañoSi1 = 18; 
+        let paddingSi1 = 12; 
+
+        const frases2 = [
+            "¿En serio?",
+            "¿De verdacita?",
+            "Mira mis ojitos 🥺",
+            "Yo sé que sí quieres",
+            "Dale al botón rojito...",
+            "¡Ya deja de jugar!"
+        ];
+        let clicsNo2 = 0;
+        let tamañoSi2 = 18;
+        let paddingSi2 = 12;
+
+        function cambiarPantalla(idActual, idSiguiente) {
+            document.getElementById(idActual).classList.remove('activa');
+            document.getElementById(idSiguiente).classList.add('activa');
+        }
+
+        function empezar() {
+            if (!musicaIniciada) {
+                document.getElementById('musica').play();
+                musicaIniciada = true;
+            }
+            cambiarPantalla('intro', 'pregunta1');
+        }
+
+        // Para evitar que el botón crezca más grande que la pantalla del celular
+        function calcularCrecimiento(tamañoActual, paddingActual) {
+            // En teléfonos, crece un poco más lento para no salirse de control rápido
+            let incrementoFuente = window.innerWidth < 600 ? 20 : 35;
+            let incrementoPadding = window.innerWidth < 600 ? 10 : 18;
+            
+            return {
+                nuevoTamaño: tamañoActual + incrementoFuente,
+                nuevoPadding: paddingActual + incrementoPadding
+            };
+        }
+
+        function dijoNo1() {
+            let btnNo = document.getElementById('btn-no-1');
+            let btnSi = document.getElementById('btn-si-1');
+            
+            btnNo.innerText = frases1[clicsNo1 % frases1.length];
+            clicsNo1++;
+
+            let crecimiento = calcularCrecimiento(tamañoSi1, paddingSi1);
+            tamañoSi1 = crecimiento.nuevoTamaño;
+            paddingSi1 = crecimiento.nuevoPadding;
+
+            btnSi.style.fontSize = tamañoSi1 + 'px';
+            btnSi.style.padding = paddingSi1 + 'px ' + (paddingSi1 * 2) + 'px';
+        }
+
+        function dijoSi1() {
+            cambiarPantalla('pregunta1', 'pregunta2');
+        }
+
+        function dijoNo2() {
+            let btnNo = document.getElementById('btn-no-2');
+            let btnSi = document.getElementById('btn-si-2');
+            
+            btnNo.innerText = frases2[clicsNo2 % frases2.length];
+            clicsNo2++;
+
+            let crecimiento = calcularCrecimiento(tamañoSi2, paddingSi2);
+            tamañoSi2 = crecimiento.nuevoTamaño;
+            paddingSi2 = crecimiento.nuevoPadding;
+
+            btnSi.style.fontSize = tamañoSi2 + 'px';
+            btnSi.style.padding = paddingSi2 + 'px ' + (paddingSi2 * 2) + 'px';
+        }
+
+        function dijoSi2() {
+            cambiarPantalla('pregunta2', 'success');
+        }
+    </script>
+</body>
+</html>
